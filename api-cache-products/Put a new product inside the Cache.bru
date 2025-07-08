@@ -1,0 +1,18 @@
+meta {
+  name: Put a new product inside the Cache
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://localhost:3000/products
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "name": "Andres",
+    "price": 2.99
+  }
+}
