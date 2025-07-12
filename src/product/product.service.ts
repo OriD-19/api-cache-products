@@ -27,11 +27,13 @@ export class ProductService {
  
         console.log('💾 Consultando BD y guardando en caché');
         const products = await this.productRepo.find();
+        // the error was in this line, TTL was too low
         await this.cacheManager.set(cacheKey, JSON.stringify(products), 1000 * 60); // 60 seconds
         return products;
     }
  
     async create(data: Partial<Product>) {
+        // add this line to invalidate the cache on each new product created
         await this.cacheManager.del('products_all');
         const newProduct = this.productRepo.create(data);
         return this.productRepo.save(newProduct);
